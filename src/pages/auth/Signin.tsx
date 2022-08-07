@@ -15,14 +15,16 @@ const Signin = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormInputs> = async data => {
-    const { data: user } = await signin(data);
+    
     try {
+      const { data: user } = await signin(data);
       alert("Đăng nhập thành công")
+      localStorage.setItem('user', JSON.stringify(user))
+    navigate('/admin')
     } catch (error) {
       alert("Sai toàn khoản hoặc mật khẩu")
     }
-    localStorage.setItem('user', JSON.stringify(user))
-    navigate('/admin')
+    
   }
   return (
     <BodyStyle>

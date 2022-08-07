@@ -16,13 +16,13 @@ const Signup = () => {
 
 
   const onSubmit = async (data: FormInputs) => {
-    const response = await signup(data);
 
-    if (response.status === 200) {
-      alert("Đăng kí thành công");
-      navigate("/");
-    }else{
-      alert("Đăng kí không thành công");
+    try {
+      const response = await signup(data);
+      alert("Đăng kí thành công")
+      navigate('/')
+    } catch (error) {
+      alert("Tài khoản đã tồn tại")
     }
   };
 
