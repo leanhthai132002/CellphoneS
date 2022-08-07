@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <Wrapper>
             <Container>
-                <Logo src={LogoImage} />
+                <Link to={'/'}><Logo src={LogoImage} /></Link>
                 <AutoComplete/>
                 <ul>
                     <UlStyle>Gọi mua hàng</UlStyle>

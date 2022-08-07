@@ -9,7 +9,8 @@ type PRODUCT_TYPE = {
     name: string;
     saleOffPrice: number;
     feature: string;
-    description: string;
+    descriptionS: string;
+    descriptionL: string;
     originalPrice: number;
     image: string;
     categories: string
@@ -30,7 +31,8 @@ function FormProduct() {
             name: "",
             saleOffPrice: 0,
             feature: "",
-            description: "",
+            descriptionS: "",
+            descriptionL: "",
             originalPrice: 0    ,
             image: "",
             categories: ""
@@ -223,8 +225,23 @@ function FormProduct() {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Mô tả"
-                                {...register("description",
+                                placeholder="Mô tả ngắn"
+                                {...register("descriptionS",
+                                    {
+                                        required: { value: true, message: "Bắt buộc" },
+                                    })}
+                            />
+                            <div style={{ color: "red" }}>{errors.name?.message}</div>
+                        </div>
+                        <div>
+                            <label className="form-label" htmlFor="">
+                                Mô tả
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Mô tả dài"
+                                {...register("descriptionL",
                                     {
                                         required: { value: true, message: "Bắt buộc" },
                                     })}

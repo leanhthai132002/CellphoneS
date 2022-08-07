@@ -4,22 +4,13 @@ import { Link } from 'react-router-dom';
 import { LaptopOutlined } from "@ant-design/icons";
 import cartSlice from "./cartSlice.js";
 import { currency } from "../../../helper.js";
-import {Divider, Typography, Button, InputNumber } from 'antd'
+import { Divider, Typography, Button, InputNumber } from 'antd'
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import Header from '../../../components/Header/index.js';
 const { Title } = Typography
 const { Content, Sider } = Layout;
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-}));
 
-const items2: MenuProps["items"] = [
-    {
-        key: "phone",
-        icon: React.createElement(LaptopOutlined),
-        label: <Link to="/phone">Điện thoại</Link>,
-    },
-];
 
 function CartPage() {
     const { cart } = useSelector(store => store)
@@ -30,26 +21,16 @@ function CartPage() {
     const increaseProduct = (id) => {
         dispatch(cartSlice.actions.increase(id))
     }
+    const deleteProduct = (id) => {
+        dispatch(cartSlice.actions.delete(id))
+    }
     return (
         <div>
             <>
                 <Layout>
                     <Layout>
-                        <Sider width={200} className="site-layout-background">
-                            <Menu
-                                mode="inline"
-                                defaultSelectedKeys={["1"]}
-                                defaultOpenKeys={["sub1"]}
-                                style={{ height: "100%", borderRight: 0 }}
-                                items={items2}
-                            />
-                        </Sider>
+                        <Header/>
                         <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
-                            <Breadcrumb style={{ margin: "16px 0" }}>
-                                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                                <Breadcrumb.Item>List</Breadcrumb.Item>
-                                <Breadcrumb.Item>App</Breadcrumb.Item>
-                            </Breadcrumb>
                             <Content
                                 className="site-layout-background"
                                 style={{
@@ -59,17 +40,22 @@ function CartPage() {
                                 }}
                             >
 
-                                <div className="cart">
-                                    <Title level={3}>Giỏ hàng</Title>
+                                <CartStyle className="cart">
+                                    <Link style={{ color: 'red' }} to='/'>Trở lại</Link>
+                                    <Title style={{ color: 'red', textAlign: 'center' }} level={3}>Giỏ hàng</Title>
                                     {cart.cart?.map(product => (
-                                        <Row key={product.id}>
+                                        <><Row key={product.id}>
                                             <Col span={20}>
-                                                <Title level={5}>{product.name}</Title>
                                                 <Row>
                                                     <Col>
                                                         <img width="50%" src={product.image} />
                                                     </Col>
                                                     <Col>
+                                                        <Title level={5}>{product.name}</Title>
+                                                        <div style={{ display: 'flex' }}>
+                                                            <h4 style={{ color: 'red', fontSize: '18px' }}>{product?.saleOffPrice.toLocaleString()}đ</h4>
+                                                            <h5 style={{ marginLeft: '10px', fontSize: '13px' }}>{product?.originalPrice.toLocaleString()}đ</h5>
+                                                        </div>
                                                         <Typography>Số lượng</Typography>
                                                         <Row>
                                                             <Col><Button onClick={() => decreaseProduct(product.id)}>-</Button></Col>
@@ -81,16 +67,29 @@ function CartPage() {
 
                                             </Col>
                                             <Col span={4}>
-                                                <Title level={5}>{currency(product.total || product.saleOffPrice)}</Title>
+                                                <Title><Button onClick={() => deleteProduct(product.id)}>X</Button></Title>
+                                                <Title></Title>
                                             </Col>
+                                            
                                         </Row>
+                                            <Divider />
+                                        </>
                                     ))}
-                                    <Divider />
+
                                     <Row>
-                                        <Col span={20}>Tổng số tiền</Col>
+                                        <Col span={20}>Tổng số tiền tạm tính</Col>
                                         <Col span={4}><Title level={3} style={{ color: "red" }}>{currency(cart.total)}</Title></Col>
                                     </Row>
-                                </div>
+
+                                    <>
+                                        <BGStyle>
+                                            <ButtonStyle >Tiến hành đặt hàng</ButtonStyle>
+                                        </BGStyle>
+                                        <BG2Style>
+                                            <ButtonStyle style={{ color: 'red' }}><Link style={{ color: 'red' }} to='/'>Chọn thêm sản phẩm khác</Link></ButtonStyle>
+                                        </BG2Style>
+                                    </>
+                                </CartStyle>
                             </Content>
                         </Layout>
                     </Layout>
@@ -99,5 +98,34 @@ function CartPage() {
         </div>
     )
 }
+
+const CartStyle = styled.div`
+    width: 800px;
+    margin: auto;
+`
+const ButtonStyle = styled.p`
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 10px;
+    
+`
+
+const BGStyle = styled.div`
+    background: #D70018;
+    border: 1px solid #DC3545;
+    border-radius: 4px;
+    margin-bottom: 5px;
+`
+const BG2Style = styled.div`
+    border: 1px solid #DC3545;
+    border-radius: 4px;
+`
 
 export default CartPage

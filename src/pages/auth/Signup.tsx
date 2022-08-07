@@ -3,11 +3,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signup } from "../../api/auth";
-
+import LogoImage from '../../assets/images/logo.png'
 type FormInputs = {
+  _id: string,
   phone: string;
   email: string;
-  password: string | number;
+  password: string;
 };
 const Signup = () => {
   const { register, handleSubmit, formState } = useForm<FormInputs>();
@@ -18,8 +19,10 @@ const Signup = () => {
     const response = await signup(data);
 
     if (response.status === 200) {
-      navigate("/");
       alert("Đăng kí thành công");
+      navigate("/");
+    }else{
+      alert("Đăng kí không thành công");
     }
   };
 
@@ -29,11 +32,9 @@ const Signup = () => {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <FormStyle className="user" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-group">
+      <FormStyle style={{paddingBottom: '100px'}} className="user" method="POST" onSubmit={handleSubmit(onSubmit)}>
+<div>
+<div className="form-group">
         <input
           type="text"
           className="form-control form-control-user"
@@ -53,10 +54,9 @@ const Signup = () => {
         />
       </div>
       <br />
-      <section style={{ color: "red", marginBottom: 10 }} />
       <div className="form-group">
         <input
-          type="text"
+          type="password"
           className="form-control form-control-user"
           id="exampleInputPassword"
           placeholder="Mật khẩu"
@@ -82,16 +82,14 @@ const Signup = () => {
             <ImgStyle src="https://i.imgur.com/rHtLcZG.png" alt="" />
           </div>
         </div>
+</div>
+<div>
+        <Img2Style src={LogoImage} alt="" />
+        </div>
     </FormStyle>
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
+      <br />  
     </BodyStyle>
 
   );
@@ -102,7 +100,9 @@ const FormStyle = styled.form`
   width: 50%;
   margin: auto;
   background-color: #fff;
- padding-top: 100px;
+  padding-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `
 const BodyStyle = styled.div`
   background-color: #E5E5E5;
@@ -112,5 +112,10 @@ const ImgStyle = styled.img`
   width: 58px;
   margin: 10px;
   margin-bottom: 0px;
+`
+
+const Img2Style = styled.img`
+  margin: 10px;
+  margin-left: 61px;
 `
 export default Signup;

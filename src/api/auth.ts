@@ -22,3 +22,4 @@ export const deleteUser = (_id: string|undefined) =>{
     const url = "/users"
     return apiAuth.delete(`/users/${_id}`)
 }
+    

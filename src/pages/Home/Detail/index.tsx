@@ -13,8 +13,7 @@ import styled from "styled-components";
 import { getAll, getProduct } from '../../../api/product';
 import { useDispatch } from "react-redux";
 import cartSlice from "../Cart/cartSlice.js";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import { Col, Row } from 'antd';
 import { Typography } from "antd";
 import Card from "react-bootstrap/Card";
 type PRODUCT_TYPE = {
@@ -22,7 +21,8 @@ type PRODUCT_TYPE = {
     name: string;
     saleOffPrice: number;
     feature: string;
-    description: string;
+    descriptionS: string;
+    descriptionL: string;
     originalPrice: number;
     image: string;
     categories: string
@@ -34,13 +34,6 @@ const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
     label: `nav ${key}`,
 }));
 
-const items2: MenuProps["items"] = [
-    {
-        key: "phone",
-        icon: React.createElement(LaptopOutlined),
-        label: <Link to="/phone">Điện thoại</Link>,
-    },
-];
 
 const DetailPage = () => {
     const [products, setProducts] = useState<PRODUCT_TYPE[]>([]);
@@ -79,7 +72,6 @@ const DetailPage = () => {
                             defaultSelectedKeys={["1"]}
                             defaultOpenKeys={["sub1"]}
                             style={{ height: "100%", borderRight: 0 }}
-                            items={items2}
                         />
                     </Sider>
                     <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
@@ -113,70 +105,57 @@ const DetailPage = () => {
                                     </div>
 
                                     <p>
-                                        {product?.description}
+                                        {product?.descriptionS}
                                     </p>
                                     <div style={{ marginTop: '160px' }}>
-                                        <ButtonStyle type="submit">Mua hàng</ButtonStyle>
+                                        <ButtonStyle type="submit">Mua ngay</ButtonStyle>
+
                                         <CartStyle onClick={() => addToCart(product)} type="submit">
                                             <ShoppingCartOutlined />
-
                                         </CartStyle>
+                                        <p style={{display: 'inline', width: '2px'}}>Thêm giỏ</p>
                                     </div>
                                 </div>
                             </LayoutStyle>
                         </Content>
-                        <h3 style={{marginTop: '50px'}}>Sản phẩm cùng loại</h3>
-                        <>
-                            <Row xs={1} md={5} className="g-3">
-                                {Array.from({ length: 1 }).map((_, idx) => (
-                                    <>
-                                        {products.map((product) => (
-                                            <Col>
-                                                <Card style={{ padding: "5px" }}>
-                                                    <Card.Img
-                                                        variant="top"
-                                                        style={{ width: "227px" }}
-                                                        src={product.image}
-                                                    />
-                                                    <Card.Body>
-                                                        <Card.Title>
-                                                            <Link to={`/detail/${product.id}`}>{product.name}</Link>
-                                                        </Card.Title>
-                                                    </Card.Body>
-                                                    <Card.Footer>
-                                                        <div className="price-group" style={{ display: "flex" }}>
-                                                            <p
-                                                                className="old-price"
-                                                                style={{ color: "#d71a00", textAlign: "left" }}
-                                                            >
-                                                                {product.saleOffPrice.toLocaleString()}.đ
-                                                            </p>
-                                                            <p
-                                                                className="price sale-price"
-                                                                style={{ textAlign: "right", marginLeft: "50px" }}
-                                                            >
-                                                                {product.originalPrice.toLocaleString()}đ
-                                                            </p>
-                                                        </div>
-                                                        <div>
-                                                            <p>Thu cũ lên đời - Trợ giá 1 triệu</p>
-                                                            <StarStyle className="fa fa-star"></StarStyle>
-                                                            <StarStyle className="fa fa-star"></StarStyle>
-                                                            <StarStyle className="fa fa-star"></StarStyle>
-                                                            <span className="fa fa-star"></span>
-                                                            <span className="fa fa-star"></span>
-                                                        </div>
-                                                    </Card.Footer>
-
-                                                </Card>
-
-                                            </Col>
-
-                                        ))}
-                                    </>
-                                ))}
-                            </Row>
-                        </>
+                        <h3 style={{ marginTop: '50px' }}>Sản phẩm cùng loại</h3>
+                        <Row justify="space-around">
+                            <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/ILdUNqN.png" alt="" />
+                                <p style={{ textAlign: 'left', paddingLeft: '5px' }} >Tai nghe Bluetooth Samsung Galaxy Buds Live</p>
+                                <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>1.490.000 ₫</p>
+                                <p>20 đánh giá</p>
+                            </Col>
+                            <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/bjmfbvE.png" alt="" />
+                                <p style={{ textAlign: 'left', paddingLeft: '5px' }}>Ốp lưng Samsung Galaxy A73 2022 Silicone Cover</p>
+                                <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>590.000 ₫</p>
+                            </Col>
+                            <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/CJlCOpH.png" alt="" />
+                                <p style={{ textAlign: 'left', paddingLeft: '5px' }}>Ốp lưng Samsung Galaxy A73 Spring Seine Scene</p>
+                                <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>176.000 ₫</p>
+                            </Col>
+                            <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/wrDeQq4.png" alt="" />
+                                <p style={{ textAlign: 'left', paddingLeft: '5px' }}>Dán chống va đập full màn đen Samsung Galaxy A73</p>
+                                <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>120.000 ₫</p>
+                            </Col>
+                            <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/Kt2EjtZ.png" alt="" />
+                                <p style={{ textAlign: 'left', paddingLeft: '5px' }}>Ốp lưng Samsung Galaxy A73 OU Silicone</p>
+                                <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>70.000 ₫</p>
+                            </Col>
+                        </Row>
+                        <div>
+                            
+                            <div style={{backgroundColor: '#F2F2F2', padding: '10px', marginTop: '10px'}}>
+                                <h4>Đặc điểm nổi bật</h4>
+                                {product?.feature}
+                            </div>
+                            <h4>Chi tiết</h4>
+                            {product?.descriptionL}
+                        </div>
                     </Layout>
                 </Layout>
             </Layout>
@@ -185,17 +164,20 @@ const DetailPage = () => {
 };
 
 const ButtonStyle = styled.button`
-  background-color: red;
+  background: #FF3945;
+  border-radius: 4px;
   color: #fff;
-  border-radius: 20px;
   border: none;
   padding: 10px 40px;
+  
 `;
 const CartStyle = styled.button`
-  border: red 1px solid;
+  background: #FFFFFF;
+  border: 1px solid #D70018;  
+  border-radius: 4px;
   color: red;
   padding: 9px;
-  border-radius: 20px;
+  margin: 0 10px;
 `;
 const LayoutStyle = styled.div`
     display: grid;

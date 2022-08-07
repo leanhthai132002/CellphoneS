@@ -19,8 +19,12 @@ const cartSlice = createSlice({
     },
     decrease: (state, action) => {
       const currentItem = state.cart.find(item => item.id === action.payload)
-      currentItem.amount = currentItem.amount ? currentItem.amount - 1 : 2
+      currentItem.amount = currentItem.amount ? currentItem.amount - 1 : 0
       currentItem.total = currentItem.saleOffPrice * currentItem.amount
+      state.total = state.cart.reduce((accu, item) => item.total ? accu + item.total : accu + item.saleOffPrice, 0)
+    },
+    delete: (state, action) => {
+      state.cart.splice(action.payload-1,1)
       state.total = state.cart.reduce((accu, item) => item.total ? accu + item.total : accu + item.saleOffPrice, 0)
     }
   }

@@ -21,11 +21,12 @@ function App(props: any) {
       <Routes>
         <Route path='signin' element={<Signin />}> </Route>
         <Route path='signup' element={<Signup />}></Route>
+        <Route path='cart' element={<CartPage />}></Route>
         {/* User layout */}
         <Route path='/' element={<UserLayout  />}>
           <Route index element={<HomePage />} />
           <Route path='detail/:id' element={<DetailPage />} />
-          <Route path='cart' element={<CartPage />} />
+          
         </Route>
         {/* Admin layout */}
         <Route path='admin' element={<AdminLayout />}>
