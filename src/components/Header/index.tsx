@@ -1,26 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from 'styled-components'
+import { signin } from "../../api/auth";
 import LogoImage from '../../assets/images/logo.png'
 import AutoComplete from "../Input/AutoComplete";
-const Header = () => {
-    return (
-        <Wrapper>
-            <Container>
-                <Link to={'/'}><Logo src={LogoImage} /></Link>
-                <AutoComplete/>
-                <ul>
-                    <UlStyle>Gọi mua hàng</UlStyle>
-                    <UlStyle>Cửa hàng gần bạn</UlStyle>
-                    <UlStyle>Tra cứu đơn hàng</UlStyle>
-                    <UlStyle><Link style={{color: '#fff'}} to='/cart'>Giỏ hàng</Link></UlStyle>
-                </ul>
-            </Container>
-        </Wrapper>
-    )
+
+if (localStorage.getItem('user')) {
+  Header.defaultProps = {
+    name: 'Chào mừng ' + JSON.parse(localStorage.getItem('user')).user.email,
+  };
 }
 
+function Header(props: any) {
+  const navigate = useNavigate();
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const info = localStorage.getItem('user');
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedin(false);
+    navigate('/')
+  };
+
+
+  return (
+    <Wrapper>
+      <Container>
+        <Link to={'/'}><Logo src={LogoImage} /></Link>
+        <AutoComplete />
+        <ul>
+          <UlStyle>Gọi mua hàng</UlStyle>
+          <UlStyle>Cửa hàng gần bạn</UlStyle>
+          <UlStyle>Tra cứu đơn hàng</UlStyle>
+          <UlStyle><Link style={{ color: '#fff' }} to='/cart'>Giỏ hàng</Link></UlStyle>
+          <UlStyle>{!info ? <Link style={{ color: '#fff' }} to='/signin'>Đăng nhập</Link> : <><h5 style={{color: '#fff'}}>{props.name}</h5> <OutStyle onClickCapture={logout}>Đăng xuất</OutStyle></>}</UlStyle>
+        </ul>
+      </Container>
+    </Wrapper>
+  )
+}
+
+
 export default Header
+
 
 const UlStyle = styled.li`
     display: inline-block;
@@ -44,4 +67,9 @@ const Container = styled.div`
     margin: 0 auto;
     display: flex;
     align-items: center;
+`
+const OutStyle = styled.p`
+  :hover{
+    cursor: pointer;
+  }
 `

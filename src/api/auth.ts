@@ -1,6 +1,7 @@
 import apiAuth from './apiAuth';
 type User = {
     _id: string,
+    roll: string,
     phone:string,
     email: string,
     password: string

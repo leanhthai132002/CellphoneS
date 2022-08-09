@@ -4,6 +4,7 @@ import { getAll, deleteUser } from "../../api/auth";
 type USER_TYPE = {
     _id: string;
     email: string;
+    roll: string;
     phone: number;
     pass: string,
 };
@@ -35,6 +36,7 @@ export default function UsersAdmin() {
                             <td scope="col">ID</td>
                             <td scope="col">Email</td>
                             <td scope="col">Số điện thoại</td>
+                            <td scope="col">Quyền</td>
                             <td scope="col">Thao tác</td>
                         </tr>
                     </thead>
@@ -46,6 +48,7 @@ export default function UsersAdmin() {
                                     <td>{user._id}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
+                                    <td>{user.roll}</td>
                                     <td>
                                         <button className='btn btn-danger' onClick={() => ondelete(user._id as string)}>
                                             <p>Xoá</p>

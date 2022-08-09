@@ -7,11 +7,19 @@ import LogoImage from '../../assets/images/logo.png'
 type FormInputs = {
   _id: string,
   phone: string;
+  roll: string;
   email: string;
   password: string;
 };
 const Signup = () => {
-  const { register, handleSubmit, formState } = useForm<FormInputs>();
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: {
+      phone: "",
+      roll: "user",
+      email: "",
+      password: "",
+  },
+});
   const navigate = useNavigate();
 
 
@@ -32,64 +40,64 @@ const Signup = () => {
       <br />
       <br />
       <br />
-      <FormStyle style={{paddingBottom: '100px'}} className="user" method="POST" onSubmit={handleSubmit(onSubmit)}>
-<div>
-<div className="form-group">
-        <input
-          type="text"
-          className="form-control form-control-user"
-          id="exampleFirstEmail"
-          placeholder="Email"
-          {...register("email", { required: true })}
-        />
-      </div>
-      <br />
-      <div className="form-group">
-        <input
-          type="text"
-          className="form-control form-control-user"
-          id="exampleInputPhone"
-          placeholder="Số điện thoại"
-          {...register("phone", { required: true })}
-        />
-      </div>
-      <br />
-      <div className="form-group">
-        <input
-          type="password"
-          className="form-control form-control-user"
-          id="exampleInputPassword"
-          placeholder="Mật khẩu"
-          {...register("password", { required: true })}
-        />
-      </div>
-      <br />
+      <FormStyle style={{ paddingBottom: '100px' }} className="user" method="POST" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control form-control-user"
+              id="exampleFirstEmail"
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control form-control-user"
+              id="exampleInputPhone"
+              placeholder="Số điện thoại"
+              {...register("phone", { required: true })}
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <input
+              type="password"
+              className="form-control form-control-user"
+              id="exampleInputPassword"
+              placeholder="Mật khẩu"
+              {...register("password", { required: true })}
+            />
+          </div>
+          <br />
 
-      <button
-        className="btn btn-primary form-control btn-user btn-block"
-        type="submit"
-        name="bnt-dk"
-      >
-        {" "}
-        Đăng ký
-      </button>
-      <section />
-        <br />
-      <div className='form-group'>
-          <p style={{ textAlign: 'center' }} >Hoặc đăng nhập bằng</p>
-          <div style={{textAlign: 'center'}}>
-            <ImgStyle src="https://i.imgur.com/IDObCCF.png" alt="" />
-            <ImgStyle src="https://i.imgur.com/rHtLcZG.png" alt="" />
+          <button
+            className="btn btn-primary form-control btn-user btn-block"
+            type="submit"
+            name="bnt-dk"
+          >
+            {" "}
+            Đăng ký
+          </button>
+          <section />
+          <br />
+          <div className='form-group'>
+            <p style={{ textAlign: 'center' }} >Hoặc đăng nhập bằng</p>
+            <div style={{ textAlign: 'center' }}>
+              <ImgStyle src="https://i.imgur.com/IDObCCF.png" alt="" />
+              <ImgStyle src="https://i.imgur.com/rHtLcZG.png" alt="" />
+            </div>
           </div>
         </div>
-</div>
-<div>
-        <Img2Style src={LogoImage} alt="" />
+        <div>
+          <Img2Style src={LogoImage} alt="" />
         </div>
-    </FormStyle>
+      </FormStyle>
       <br />
       <br />
-      <br />  
+      <br />
     </BodyStyle>
 
   );

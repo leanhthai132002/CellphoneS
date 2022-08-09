@@ -7,20 +7,31 @@ import LogoImage from '../../assets/images/logo.png'
 type FormInputs = {
   _id: string,
   phone: string;
+  roll: string;
   email: string;
   password: string;
 }
 const Signin = () => {
   const { register, handleSubmit, formState } = useForm<FormInputs>();
   const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<FormInputs> = async data => {
     
     try {
       const { data: user } = await signin(data);
-      alert("Đăng nhập thành công")
-      localStorage.setItem('user', JSON.stringify(user))
-    navigate('/admin')
+      if (user.user.roll === 'user') {
+        
+        alert("Đăng nhập thành công")
+        localStorage.setItem('user', JSON.stringify(user))
+        navigate("/")
+        
+       
+        
+      }else{
+        alert("Đăng nhập thành công")
+        localStorage.setItem('user', JSON.stringify(user))
+        navigate("/admin")
+      }
+      
     } catch (error) {
       alert("Sai toàn khoản hoặc mật khẩu")
     }
