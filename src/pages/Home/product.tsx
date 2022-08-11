@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAll } from "../../api/product";
+import { getProducts } from "../../api/product";
 import CardGroup from "react-bootstrap/CardGroup";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -8,7 +8,7 @@ import { Typography } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 interface DataType {
-  id: string;
+  _id: string;
   name: string;
   saleOffPrice: number;
   feature: string;
@@ -20,7 +20,7 @@ interface DataType {
 function GroupExample() {
   const [products, setProducts] = useState<DataType[]>([]);
   const handleGetProducts = async () => {
-    const response = await getAll();
+    const response = await getProducts();
     setProducts(response.data);
   };
 
@@ -50,7 +50,7 @@ function GroupExample() {
                   />
                   <Card.Body>
                     <Card.Title>
-                      <Link to={`/detail/${product.id}`}>{product.name}</Link>
+                      <Link to={`/detail/${product._id}`}>{product.name}</Link>
                     </Card.Title>
                   </Card.Body>
                   <Card.Footer>
@@ -59,13 +59,13 @@ function GroupExample() {
                         className="old-price"
                         style={{ color: "#d71a00", textAlign: "left" }}
                       >
-                        {product.saleOffPrice.toLocaleString()}.đ
+                        {product.saleOffPrice}.đ
                       </p>
                       <p
                         className="price sale-price"
                         style={{ textAlign: "right", marginLeft: "50px" }}
                       >
-                        {product.originalPrice.toLocaleString()}đ
+                        {product.originalPrice}đ
                       </p>
                     </div>
                     <div>
@@ -87,12 +87,12 @@ function GroupExample() {
         ))}
       </Row>
 
-        <Typography.Title
-          level={2}
-          style={{ marginLeft: "100px", marginTop: "10px" }}
-        >
-          Phụ kiện
-        </Typography.Title>
+      <Typography.Title
+        level={2}
+        style={{ marginLeft: "100px", marginTop: "10px" }}
+      >
+        Phụ kiện
+      </Typography.Title>
       <div className="categories-content">
 
         <div style={{ textAlign: 'center' }} className="categories-content-wrapper is-flex">
@@ -108,7 +108,7 @@ function GroupExample() {
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/chuot-ban-phim-may-tinh.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-663.svg" style={{ backgroundColor: 'rgb(253, 163, 99)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-663.svg")' }}><span>Chuột, bàn phím</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/the-nho-usb-otg.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-109.svg" style={{ backgroundColor: 'rgb(255, 102, 102)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-109.svg")' }}><span>Thẻ nhớ, USB</span></AStyle> {/**/}</div>
           </div>
-          <div style={{ display: 'flex', marginLeft: '234px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/apple-care.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-966.svg" style={{ backgroundColor: 'rgb(214, 214, 214)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-966.svg")' }}><span>Apple Care</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/bao-da-op-lung/airtag.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-929.svg" style={{ backgroundColor: 'rgb(255, 173, 182)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-929.svg")' }}><span>Dây đeo Airtag</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/gaming-gear.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-669.svg" style={{ backgroundColor: 'rgb(150, 253, 181)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-669.svg")' }}><span>Gaming Gear</span></AStyle> {/**/}</div>
@@ -118,20 +118,21 @@ function GroupExample() {
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/phu-kien/balo-tui-chong-soc-laptop.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-70.svg" style={{ backgroundColor: 'rgb(255, 133, 192)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-70.svg")' }}><span>Balo, túi chống sốc</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/do-choi-cong-nghe/day-deo-dong-ho.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-707.svg" style={{ backgroundColor: 'rgb(255, 189, 189)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-707.svg")' }}><span>Dây đeo đồng hồ</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/o-cung/di-dong.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-750.svg" style={{ backgroundColor: 'rgb(255, 209, 225)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/icons/category/cate-750.svg")' }}><span>Ổ cứng đi động</span></AStyle> {/**/}</div>
-
+            <div className=""><FakeStyle> </FakeStyle> {/**/}</div>
           </div>
         </div>
       </div>
       <div>
-        <Typography.Title
+        
+        <div className="categories-content">
+          <Typography.Title
           level={2}
           style={{ marginLeft: "100px", marginTop: "10px" }}
         >
           Linh kiện máy tính
         </Typography.Title>
-        <div className="categories-content" style={{marginLeft: '234px'}}>
-          <div style={{ display: 'flex' }} className="categories-content-wrapper is-flex">
-            <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/may-tinh-de-ban/lap-rap.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cellphones.com.vn/media/icons/category/cate-868.svg" style={{ backgroundColor: 'rgb(252, 165, 165)',backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cellphones.com.vn/media/icons/category/cate-868.svg")' }}><span>PC ráp sẵn CellphoneS</span></AStyle> {/**/}</div>
+          <div style={{ display: 'flex', justifyContent: 'center' }} className="categories-content-wrapper is-flex">
+            <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/may-tinh-de-ban/lap-rap.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cellphones.com.vn/media/icons/category/cate-868.svg" style={{ backgroundColor: 'rgb(252, 165, 165)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cellphones.com.vn/media/icons/category/cate-868.svg")' }}><span>PC ráp sẵn CellphoneS</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/cpu.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/c/p/cpu_1.png" style={{ backgroundColor: 'rgb(253, 164, 175)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/c/p/cpu_1.png")' }}><span>CPU</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/mainboard-bo-mach-chu.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/m/a/mainboard_1.png" style={{ backgroundColor: 'rgb(249, 168, 212)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/m/a/mainboard_1.png")' }}><span>Mainboard</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/ram.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/r/a/ram_2.png" style={{ backgroundColor: 'rgb(196, 181, 253)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/r/a/ram_2.png")' }}><span>RAM</span></AStyle> {/**/}</div>
@@ -140,12 +141,22 @@ function GroupExample() {
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/nguon-may-tinh-psu.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/p/s/psu.png" style={{ backgroundColor: 'rgb(110, 231, 183)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/p/s/psu.png")' }}><span>Nguồn máy tính</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/tan-nhiet.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/t/_/t_n_nhi_t_2.png" style={{ backgroundColor: 'rgb(252, 211, 75)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/t/_/t_n_nhi_t_2.png")' }}><span>Tản nhiệt</span></AStyle> {/**/}</div>
             <div className="item-categories-outer"><AStyle href="https://cellphones.com.vn/linh-kien/vo-case-may-tinh.html" className="item-categories " data-src="https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/c/a/case_1.png" style={{ backgroundColor: 'rgb(253, 186, 116)', backgroundImage: 'url("https://cdn2.cellphones.com.vn/180x/https://cdn.cellphones.com.vn/media/catalog/product/c/a/case_1.png")' }}><span>Case máy tính</span></AStyle> {/**/}</div>
+            <div className=""><FakeStyle> </FakeStyle> {/**/}</div>
           </div>
         </div>
       </div>
     </>
   );
 }
+const FakeStyle = styled.div`
+  display: block;
+    overflow: hidden;
+    text-decoration: none;
+    min-height: 125px;
+    width: 100px;
+    color: #fff;
+    margin: 10px;
+`
 
 const AStyle = styled.a`
   width: 100%;
@@ -159,14 +170,14 @@ const AStyle = styled.a`
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
     min-height: 125px;
     width: 100px;
-    margin: 20px;
+    margin: 10px;
     color: #fff;
     text-align: left;
     font-weight: bold ;
-`;
+    padding: 5px;
+`
 
 const StarStyle = styled.span`
   color: orange;
-
 `
 export default GroupExample;

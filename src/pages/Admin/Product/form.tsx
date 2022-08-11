@@ -7,17 +7,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 type PRODUCT_TYPE = {
     name: string;
-    saleOffPrice: number;
     feature: string;
     descriptionS: string;
     descriptionL: string;
+    saleOffPrice: number;
     originalPrice: number;
     image: string;
-    categories: string
 };
 
 function FormProduct() {
     const navigate = useNavigate();
+
     const { id } = useParams();
     const [imageBase64, setImageBase64] = useState<any>('');
 
@@ -29,34 +29,33 @@ function FormProduct() {
     } = useForm({
         defaultValues: {
             name: "",
-            saleOffPrice: 0,
             feature: "",
             descriptionS: "",
             descriptionL: "",
-            originalPrice: 0    ,
+            saleOffPrice: 0,
+            originalPrice:0,
             image: "",
-            categories: ""
         },
     });
-
     const onSubmit: SubmitHandler<PRODUCT_TYPE> = (data) => {
         const submitData = {
             ...data,
             saleOffPrice: +data.saleOffPrice,
             originalPrice: +data.originalPrice,
-            image: imageBase64 
+            image: imageBase64  
         };
         if (id) {
             return handleUpdateProduct(submitData);
         }
-        return handleCreateProduct(submitData);
+        return handlecreateProduct(submitData);
     };
-    const handleCreateProduct = async (data: PRODUCT_TYPE) => {
+
+    const handlecreateProduct = async (data: PRODUCT_TYPE) => {
         const response = await createProduct(data);
 
-        if (response.status === 201) {
+        if (response.status === 200) {
+            alert("Thêm sản phẩm thành công")
             navigate("/admin");
-            alert("Thêm thành công");
         }
     };
 
@@ -64,8 +63,8 @@ function FormProduct() {
         const response = await updateProduct(id, data);
 
         if (response.status === 200) {
+            alert("Cập nhật sản phẩm thành công")
             navigate("/admin");
-            alert("Cập nhật thành công");
         }
     };
 
@@ -88,6 +87,7 @@ function FormProduct() {
     };
 
     const handleChangeFile = (event: any) => {
+        // const acceptImageTypes = ['image/png', 'image/jpg'];
         const file = event.target.files[0];
         if (!file) {
             console.log('Không có file');
@@ -96,7 +96,14 @@ function FormProduct() {
             console.log('File quá lớn');
             return;
         } 
+        // else if (!acceptImageTypes.includes(file.type)) {
+        //     console.log('File không đúng định dạng');
+        //     return;
+        // }
+
+        // 1. Định nghĩa 1 đối tượng đọc file
         const reader = new FileReader();
+        // 2. Định nghĩa việc load file
         reader.onload = (e) => {
             const image = new Image();
             if (e && e.target) {
@@ -105,6 +112,8 @@ function FormProduct() {
                 setImageBase64(e.target.result);
             }
         };
+
+        // 3. Load file mà lấy được từ input
         reader.readAsDataURL(file);
     };
 
@@ -113,13 +122,126 @@ function FormProduct() {
             handleGetProduct(id);
         }
     }, [id]);
+
     return (
         <div>
-            <h3>Thêm mới sản phẩm</h3>
-            <Row gutter={16}>
-                <Col span={14}>
-                    <Typography.Title level={5}>Thông tin sản phẩm</Typography.Title>
-                    <form onSubmit={handleSubmit(onSubmit)} action="">
+
+            <form
+                onSubmit={handleSubmit(onSubmit)} style={{
+                    width: "60%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "20px",
+                }}
+            >
+
+                <div className="">
+                    <div className="mb-3">
+                        <label className="form-label">Tên sản phẩm</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Sản phẩm'
+                            {...register(
+                                'name',
+                                {
+                                    required: { value: true, message: 'Không được bỏ trống' },
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.name ? errors.name.message : ''}
+                        </div>
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="form-label">Tính năng nổi bật</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Tính năng nổi bật'
+                            {...register(
+                                'feature',
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.feature ? errors.feature.message : ''}
+                        </div>
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="form-label">Mô tả</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Mô tả ngắn'
+                            {...register(
+                                'descriptionS',
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.descriptionS ? errors.descriptionS.message : ''}
+                        </div>
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="form-label">Mô tả</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Mô tả dài'
+                            {...register(
+                                'descriptionL',
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.descriptionL ? errors.descriptionL.message : ''}
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Giá khuyến mại</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Giá khuyến mại'
+                            {...register(
+                                'saleOffPrice',
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.saleOffPrice ? errors.saleOffPrice.message : ''}
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Giá mặc định</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Giá mặc định'
+                            {...register(
+                                'originalPrice',
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
+                            )}
+                        />
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
+                            {errors.originalPrice ? errors.originalPrice.message : ''}
+                        </div>
+                    </div>
+
                     <div className="mb-3">
                         <label className="form-label">Ảnh</label>
                         <input
@@ -127,136 +249,27 @@ function FormProduct() {
                             type="file"
                             {...register(
                                 'image',
-                                // {
-                                //     required: { value: true, message: "Không được bỏ trống" }
-                                // }
+                                {
+                                    required: { value: true, message: "Không được bỏ trống" }
+                                }
                             )}
                             onChange={(event) => handleChangeFile(event)}
                             
                         />
-                        <div className="form-text" style={{ color: 'red' }}>
+                        <div id="emailHelp" className="form-text" style={{ color: 'red' }}>
                             {errors.image ? errors.image.message : ''}
                         </div>
                         <img src={imageBase64} width={100} alt="" />
 
                     </div>
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Tên sản phẩm
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Tên sản phẩm"
-                                {...register("name", {
-                                    required: { value: true, message: "Bắt buộc" },
-                                })}
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
+                 
 
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Giá gốc
-                            </label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Giá gốc"
-                                {...register("originalPrice",
+                    <button className="btn btn-primary">
+                        {id ? "Cập nhật" : "Tạo mới"}
+                    </button>
 
-                                    {
-                                        required: { value: true, message: "Bắt buộc" },
-                                    }
-                                )}
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
-
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Giá khuyến mãi
-                            </label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Giá khuyến mãi"
-                                {...register("saleOffPrice",
-                                    {
-                                        required: { value: true, message: "Bắt buộc" },
-                                    })}
-
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
-
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Danh mục
-                            </label>{" "}
-                            <br />
-                            <Select style={{ width: "165px" }} >
-                                <option value="phone">Điện thoại</option>
-                                <option value="laptop">Laptop</option>
-                                <option value="accessory">Phụ kiện</option>
-                                <option value="tablet">Máy tính bảng</option>
-                            </Select>
-                        </div>
-
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Đặc điểm nổi bật
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Đặc điểm nổi bật"
-                                {...register("feature",
-                                    {
-                                        required: { value: true, message: "Bắt buộc" },
-                                    })}
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Mô tả
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Mô tả ngắn"
-                                {...register("descriptionS",
-                                    {
-                                        required: { value: true, message: "Bắt buộc" },
-                                    })}
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
-                        <div>
-                            <label className="form-label" htmlFor="">
-                                Mô tả
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Mô tả dài"
-                                {...register("descriptionL",
-                                    {
-                                        required: { value: true, message: "Bắt buộc" },
-                                    })}
-                            />
-                            <div style={{ color: "red" }}>{errors.name?.message}</div>
-                        </div>
-
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                {id ? "Cập nhật" : "Tạo mới"}
-                            </Button>
-                        </Form.Item>
-                    </form>
-                </Col>
-            </Row>
+                </div>
+            </form>
         </div>
     );
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAll, deleteProduct } from "../../../api/product";
+import { getProducts, deleteProduct } from "../../../api/product";
 import { Link } from "react-router-dom";
 
 type PRODUCT_TYPE = {
-    id: string,
+    _id: number,
     name: string;
     saleOffPrice: number;
     feature: string;
@@ -18,16 +18,17 @@ export default function ProductAdminPage() {
     const [products, setProducts] = useState<PRODUCT_TYPE[]>([]);
 
     const handleGetProducts = async () => {
-        const response = await getAll();
+        const response = await getProducts();
         setProducts(response.data)
     };
 
-    const ondelete = async (id: string) => {
-        const response = await deleteProduct(id);
+    const ondelete = async (_id: number) => {
+        const response = await deleteProduct(_id);
         if (response.status === 200) {
             handleGetProducts();
         }
     }
+
 
     useEffect(() => {
         handleGetProducts();
@@ -62,17 +63,17 @@ export default function ProductAdminPage() {
                     <tbody>
                         {
                             products.map(product => (
-                                <tr key={product.id}>
-                                    <td>{product.id}</td>
+                                <tr key={product._id}>
+                                    <td>{product._id}</td>
                                     <td>{product.name}</td>
                                     <td><img style={{width: '100px'}} src={product.image} alt="" /></td>
                                     <td>{product.saleOffPrice.toLocaleString()}</td>
                                     <td>{product.descriptionS}</td>
                                     <td>{product.descriptionL}</td>
                                     <td>{product.categories}</td>
-                                    <td><Link className="btn btn-warning" to={`/admin/products/edit/${product.id}`}>Chỉnh sửa</Link></td>
+                                    <td><Link className="btn btn-warning" to={`/admin/products/edit/${product._id}`}>Chỉnh sửa</Link></td>
                                     <td>
-                                        <button className='btn btn-danger' onClick={() => ondelete(product.id as string)}>
+                                        <button className='btn btn-danger' onClick={() => ondelete(product._id as number)}>
                                             <p>Xoá</p>
 
                                         </button>

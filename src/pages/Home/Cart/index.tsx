@@ -1,7 +1,6 @@
 import React from 'react'
 import { Breadcrumb, Col, Layout, Menu, MenuProps, Row } from "antd";
 import { Link } from 'react-router-dom';
-import { LaptopOutlined } from "@ant-design/icons";
 import cartSlice from "./cartSlice.js";
 import { currency } from "../../../helper.js";
 import { Divider, Typography, Button, InputNumber } from 'antd'
@@ -10,18 +9,26 @@ import styled from 'styled-components';
 import Header from '../../../components/Header/index.js';
 const { Title } = Typography
 const { Content, Sider } = Layout;
+interface Icart{
+    cart: any[],
+    total: number
+}
 
+interface IState {
+    cart: Icart
+    product: any
+}
 
 function CartPage() {
-    const { cart } = useSelector(store => store)
+    const  cart: Icart  = useSelector((store: IState)  => store.cart)
     const dispatch = useDispatch()
-    const decreaseProduct = (id) => {
+    const decreaseProduct = (id: string) => {
         dispatch(cartSlice.actions.decrease(id))
     }
-    const increaseProduct = (id) => {
+    const increaseProduct = (id: string) => {
         dispatch(cartSlice.actions.increase(id))
     }
-    const deleteProduct = (id) => {
+    const deleteProduct = (id: string) => {
         dispatch(cartSlice.actions.delete(id))
     }
     return (
@@ -78,7 +85,7 @@ function CartPage() {
 
                                     <Row>
                                         <Col span={20}>Tổng số tiền tạm tính</Col>
-                                        <Col span={4}><Title level={3} style={{ color: "red" }}>{currency(cart.total)}</Title></Col>
+                                        <Col span={4}><Title level={4} style={{ color: "red" }}>{currency(cart.total)}</Title></Col>
                                     </Row>
 
                                     <>
@@ -104,7 +111,6 @@ const CartStyle = styled.div`
     margin: auto;
 `
 const ButtonStyle = styled.p`
-
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;

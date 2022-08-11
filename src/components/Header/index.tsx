@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from 'styled-components'
-import { signin } from "../../api/auth";
+import { SearchOutlined } from "@ant-design/icons";
 import LogoImage from '../../assets/images/logo.png'
-import AutoComplete from "../Input/AutoComplete";
 
 if (localStorage.getItem('user')) {
   Header.defaultProps = {
-    name: 'Chào mừng ' + JSON.parse(localStorage.getItem('user')).user.email,
+    name: 'Chào mừng: ' + JSON.parse(localStorage.getItem('user') || '{}').user.name,
   };
 }
 
@@ -16,7 +15,12 @@ function Header(props: any) {
   const navigate = useNavigate();
   const [isLoggedin, setIsLoggedin] = useState(false);
   const info = localStorage.getItem('user');
-
+  const onSearch = () => {
+    const search_value = (document.querySelector('#search_content') as HTMLInputElement).value
+    if (search_value != "") {
+      navigate(`/search/${search_value}`)
+    }
+  }
   const logout = () => {
     localStorage.removeItem('user');
     setIsLoggedin(false);
@@ -24,17 +28,25 @@ function Header(props: any) {
   };
 
 
+
   return (
     <Wrapper>
       <Container>
         <Link to={'/'}><Logo src={LogoImage} /></Link>
-        <AutoComplete />
+        <div  style={{display:'flex', height: '40px'}}>
+          <input style={{border: 'none'}} type="text" id="search_content"  placeholder="Tìm kiếm tại đây..." />
+          <button style={{border: 'none'}} onClick={onSearch} aria-label="Search">
+            <div>
+            <SearchOutlined />
+            </div>
+          </button>
+        </div>
         <ul>
           <UlStyle>Gọi mua hàng</UlStyle>
           <UlStyle>Cửa hàng gần bạn</UlStyle>
           <UlStyle>Tra cứu đơn hàng</UlStyle>
           <UlStyle><Link style={{ color: '#fff' }} to='/cart'>Giỏ hàng</Link></UlStyle>
-          <UlStyle>{!info ? <Link style={{ color: '#fff' }} to='/signin'>Đăng nhập</Link> : <><h5 style={{color: '#fff'}}>{props.name}</h5> <OutStyle onClickCapture={logout}>Đăng xuất</OutStyle></>}</UlStyle>
+          <UlStyle>{!info ? <Link style={{ color: '#fff' }} to='/signin'>Đăng nhập</Link> : <><h5 style={{ color: '#fff' }}>{props.name}</h5> <OutStyle onClickCapture={logout}>Đăng xuất</OutStyle></>}</UlStyle>
         </ul>
       </Container>
     </Wrapper>

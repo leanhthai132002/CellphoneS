@@ -3,6 +3,7 @@ import { getAll, deleteUser } from "../../api/auth";
 
 type USER_TYPE = {
     _id: string;
+    name: string;
     email: string;
     roll: string;
     phone: number;
@@ -34,6 +35,7 @@ export default function UsersAdmin() {
                         <tr>
                             <td scope="col">STT</td>
                             <td scope="col">ID</td>
+                            <td scope="col">Tên</td>
                             <td scope="col">Email</td>
                             <td scope="col">Số điện thoại</td>
                             <td scope="col">Quyền</td>
@@ -46,6 +48,7 @@ export default function UsersAdmin() {
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{user._id}</td>
+                                    <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
                                     <td>{user.roll}</td>

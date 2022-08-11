@@ -13,6 +13,7 @@ import Signin from './pages/auth/Signin';
 import CartPage from './pages/Home/Cart'
 import Signup from './pages/auth/Signup'
 import UsersAdmin from './pages/Admin/user'
+import Search from './pages/Home/search'
 
 function App(props: any) {
   const [count, setCount] = useState(0)
@@ -23,10 +24,13 @@ function App(props: any) {
         <Route path='signup' element={<Signup />}></Route>
         <Route path='cart' element={<CartPage />}></Route>
         {/* User layout */}
-        <Route path='/' element={<UserLayout  />}>
+        <Route path='/' element={<UserLayout />}>
           <Route index element={<HomePage />} />
           <Route path='detail/:id' element={<DetailPage />} />
-          
+          <Route path={'search/:search_value'}>
+            <Route index element={<Search />} />
+          </Route>
+
         </Route>
         {/* Admin layout */}
         <Route path='admin' element={<AdminLayout />}>

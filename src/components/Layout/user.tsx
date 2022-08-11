@@ -5,6 +5,7 @@ import Footer from "../Footer/footer";
 
 
 const UserLayout = (props: any) => {
+    
     return (
         <>
             <Header/>

@@ -6,6 +6,7 @@ import { signup } from "../../api/auth";
 import LogoImage from '../../assets/images/logo.png'
 type FormInputs = {
   _id: string,
+  name: string
   phone: string;
   roll: string;
   email: string;
@@ -14,8 +15,10 @@ type FormInputs = {
 const Signup = () => {
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {
+      _id: "",
+      name:"",
       phone: "",
-      roll: "user",
+      roll: "admin",
       email: "",
       password: "",
   },
@@ -42,6 +45,16 @@ const Signup = () => {
       <br />
       <FormStyle style={{ paddingBottom: '100px' }} className="user" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <div>
+        <div className="form-group">
+            <input
+              type="text"
+              className="form-control form-control-user"
+              id="exampleFirstName"
+              placeholder="Name"
+              {...register("name", { required: true })}
+            />
+          </div>
+          <br />
           <div className="form-group">
             <input
               type="text"

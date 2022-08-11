@@ -10,7 +10,7 @@ import { Breadcrumb, Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getAll, getProduct } from '../../../api/product';
+import { getProducts, getProduct } from '../../../api/product';
 import { useDispatch } from "react-redux";
 import cartSlice from "../Cart/cartSlice.js";
 import { Col, Row } from 'antd';
@@ -37,8 +37,9 @@ const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
 
 const DetailPage = () => {
     const [products, setProducts] = useState<PRODUCT_TYPE[]>([]);
+    
     const handleGetProducts = async () => {
-        const response = await getAll();
+        const response = await getProducts();
         setProducts(response.data);
     };
 
