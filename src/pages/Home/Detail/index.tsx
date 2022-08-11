@@ -122,7 +122,7 @@ const DetailPage = () => {
                         <h3 style={{ marginTop: '50px' }}>Sản phẩm cùng loại</h3>
                         <Row justify="space-around">
                             <Col style={{ border: '1px solid #eceaea', textAlign: 'center' }} span={4}>
-                                <img style={{ width: '200px' }} src="https://i.imgur.com/ILdUNqN.png" alt="" />
+                                <img style={{ width: '200px' }} src="https://i.imgur.com/CavfPFX.png" alt="" />
                                 <p style={{ textAlign: 'left', paddingLeft: '5px' }} >Tai nghe Bluetooth Samsung Galaxy Buds Live</p>
                                 <p style={{ textAlign: 'left', paddingLeft: '5px', color: 'red' }}>1.490.000 ₫</p>
                                 <p>20 đánh giá</p>
