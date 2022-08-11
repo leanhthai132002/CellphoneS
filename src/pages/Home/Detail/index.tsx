@@ -67,15 +67,7 @@ const DetailPage = () => {
         <>
             <Layout>
                 <Layout>
-                    <Sider width={200} className="site-layout-background">
-                        <Menu
-                            mode="inline"
-                            defaultSelectedKeys={["1"]}
-                            defaultOpenKeys={["sub1"]}
-                            style={{ height: "100%", borderRight: 0 }}
-                        />
-                    </Sider>
-                    <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
+                    <Layout style={{padding: ' 0 100px' , backgroundColor: '#fff'}}>
                         <Breadcrumb style={{ margin: "16px 0" }}>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
                             <Breadcrumb.Item>List</Breadcrumb.Item>
